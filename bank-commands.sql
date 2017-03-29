@@ -41,3 +41,31 @@ cDOB date,
 primary key (SSN)
 )
 Engine=InnoDB;
+create table Transaction(
+transId int auto_increment not null,
+transType varchar(20),
+transAmt numeric(12,2) check (transAmt > 0),
+transDateTime datetime,
+SSN numeric(9,0),
+acctId int,
+primary key(transId),
+foreign key (SSN) references Customer (SSN) on delete cascade,
+foreign key (acctId) references Account (acctId) on delete cascade
+)
+Engine=InnoDB;
+create table CustomerLoan(
+loanId int,
+SSN numeric(9,0),
+primary key (loanId, SSN),
+foreign key (loanId) references Loan (loanId) on delete cascade,
+foreign key (SSN) references Customer (SSN) on delete cascade
+)
+Engine=InnoDB;
+create table CustomerAccount(
+acctId int,
+SSN numeric(9,0),
+primary key (acctId, SSN),
+foreign key (acctId) references Account (acctId) on delete cascade,
+foreign key (SSN) references Customer (SSN) on delete cascade
+)
+Engine=InnoDB;
